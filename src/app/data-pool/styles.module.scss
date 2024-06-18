@@ -1,0 +1,45 @@
+.layoutWrapper {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+}
+.wrapper {
+    width: 100%;
+    height: 100%;
+    /*overflow: hidden;*/
+    display: flex;
+    flex-direction: column;
+}
+
+.topWrapper {
+    width: 100%;
+    min-height: 220px;
+    .rightSide {
+        float: right;
+        button{
+            width: 100px;
+            height: 30px;
+        }
+    }
+}
+
+.mainWrapper {
+    width: 100%;
+    flex: 1 1;
+    overflow: hidden;
+    display: flex;
+}
+
+.leftContents {
+    width: 300px;
+    height: 100%;
+    flex: 0 0 300px;
+}
+
+.rightContents {
+    width: calc(100% - 300px);
+    height: 100%;
+    flex: 1 1;
+    overflow-y: auto;
+    overflow-x: auto;
+}

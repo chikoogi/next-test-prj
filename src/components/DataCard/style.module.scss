@@ -1,0 +1,23 @@
+.wrapper {
+  display: flex;
+  gap: 30px;
+}
+
+.folderWrapper {
+  width: 346px;
+  flex: 0 0 346px;
+  background-color:#F8F9FA;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap:12px;
+}
+
+.tableWrapper {
+  width: 314px;
+  height: 127px;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  background-color: #fff;
+}

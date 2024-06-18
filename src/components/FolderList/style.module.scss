@@ -1,0 +1,46 @@
+.wrapper {
+  padding: 16px;
+  background-color: #F8F9FA;
+  width: 100%;
+  display: flex;
+
+
+  .leftBox{
+    width: 100%;
+    flex: 1 1;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+    overflow: hidden;
+    max-height: 52px;
+    &.show{
+      max-height: 100%;
+    }
+  }
+  .rightBox{
+    flex: 0 0 40px;
+    width: 40px;
+  }
+
+}
+
+.folderWrapper {
+  width: 180px;
+  height: 52px;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.sortableWrapper{
+  padding: 10px;
+
+}
+
+.sortableLine {
+  height: 32px;
+  width: 6px;
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  background-color: #5856D6;
+}
