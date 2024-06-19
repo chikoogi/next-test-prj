@@ -1,21 +1,21 @@
 "use client"
 import styled from "./style.module.scss";
-import {useState} from "react";
+import {useCallback, useState} from "react";
 import {useDrag, useDrop} from "react-dnd";
 
 
-function Folder({name}:any) {
+function Folder({item, findCard, moveCard}:any) {
     const [{ opacity, isDragging }, drag, preview] = useDrag(
         {
             type: "folder",
-            item: { name },
+            item: item,
             collect: (monitor: any) => ({
                 opacity: monitor.isDragging() ? 0.2 : 1,
                 isDragging: monitor.isDragging(),
             }),
             end: (item, monitor) => {},
         },
-        [name]
+        [item.id, item.name]
     );
 
 
@@ -33,14 +33,15 @@ function Folder({name}:any) {
 
     const [{isOver :isOver2, canDrop:canDrop2}, drop2] = useDrop(() => ({
         accept: ["folder"],
-        drop: (item: any, monitor) => {
-            console.log(item);
+        drop: (dropItem:any, monitor) => {
+            console.log(dropItem, item);
+            moveCard(dropItem.id, item.id);
         },
         collect: (monitor) => ({
             isOver: monitor.isOver(),
             canDrop: monitor.canDrop(),
         }),
-    }),[])
+    }),[moveCard])
 
 
     const isActive = isOver && canDrop
@@ -50,40 +51,102 @@ function Folder({name}:any) {
     }
 
 return (
-    <>
+    <div className={styled.folder}>
         <div className={styled.folderWrapper}
              style={{backgroundColor}}
              ref={(node) => {
                  drop(node);
                  drag(node);
              }}>
-            {name}
+            {item.name}
         </div>
 
-        <div className={styled.sortableWrapper} ref={drop2}>
+        <div className={styled.sortableWrapper} ref={(node) => {
+            drop2(node);
+        }}>
             <div className={styled.sortableLine}
                  style={{opacity: isOver2 ? 1 : 0}}
             />
         </div>
-    </>)
+    </div>)
 
 }
 
 export default function FolderList() {
+    const [cards, setCards] = useState<any[]>([{
+        id: 1,
+        name: "새폴더 1",
+    },{
+        id: 2,
+        name: "새폴더 2",
+    },{
+        id: 3,
+        name: "새폴더 3",
+    },{
+        id: 4,
+        name: "새폴더 4",
+    },{
+        id: 5,
+        name: "새폴더 5",
+    }]);
 
-    const FOLDER_LIST = [...new Array(40)];
+    // const FOLDER_LIST = [...new Array(40)];
     const [show, setShow] = useState(false);
+
+    const addCard = useCallback(() => {
+        if(cards.length >= 17) return;
+        setCards(prev => {
+            const idx = prev.length;
+            return [...prev, {
+                id: idx + 1,
+                name: `새폴더 ${idx + 1}`
+            }]
+        })
+
+    },[cards]);
+
+    const findCard = useCallback(
+        (id: string) => {
+            const card = cards.find((v: any) => `${v.id}` === id.toString()) as any;
+            return {
+                ...card,
+                index: cards.indexOf(card),
+            };
+        },
+        [cards]
+    );
+
+    const moveCard = useCallback(
+        async (fromId: string, toId: string) => {
+            const fromCard = findCard(fromId);
+            const toCard = findCard(toId);
+            const movingCard = cards.splice(fromCard.index, 1);
+            cards.splice(toCard.index, 0, movingCard[0]);
+            setCards([...cards]);
+
+
+        },
+        [findCard, cards]
+    );
+
 
     return (
         <div className={styled.wrapper}>
-        <div className={`${styled.leftBox} ${show ? styled.show : ""}`}>
-                <div className={styled.folderWrapper}>
+            <div className={`${styled.leftBox} ${show ? styled.show : ""}`}>
+                <div className={styled.folderWrapper} onClick={addCard}>
                     새 폴더 추가
                 </div>
+                <div className={styled.sortableWrapper} >
+                    <div className={styled.sortableLine}
+                         style={{opacity: 0}}
+                    />
+                </div>
                 {
-                    FOLDER_LIST.map((_,index)=>{
+                    cards.map((item, index) => {
                         return (
-                            <Folder name={`새폴더 ${index+1}`} />
+                            <Folder key={item.id} item={item}
+                                    moveCard={moveCard}
+                                    findCard={findCard}/>
                         )
                     })
                 }

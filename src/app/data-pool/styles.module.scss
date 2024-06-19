@@ -6,9 +6,24 @@
 .wrapper {
     width: 100%;
     height: 100%;
-    /*overflow: hidden;*/
+
+    display: flex;
+}
+
+.mainWrapper{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
+    flex: 1 1;
+}
+
+.previewWrapper {
+    width: 780px;
+    height: 100%;
+    flex: 0 0 780px;
+    background-color: #F8F9FA;
 }
 
 .topWrapper {
@@ -23,7 +38,7 @@
     }
 }
 
-.mainWrapper {
+.bottomWrapper {
     width: 100%;
     flex: 1 1;
     overflow: hidden;
