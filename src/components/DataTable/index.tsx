@@ -4,6 +4,7 @@ import styled from "./style.module.scss";
 import {DragPreviewImage, useDrag} from "react-dnd";
 import folder from "./folder.png";
 import Image from "next/image";
+import Link from "next/link";
 
 function TestImage() {
 
@@ -59,7 +60,7 @@ export default function DataTable() {
                 <th>데이터명</th>
                 <th>폴더</th>
                 <th>생성자</th>
-                <th>일시</th>
+                <th>생성 일시</th>
             </tr>
             {
                 LIST.map((_,index)=>{

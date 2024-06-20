@@ -45,15 +45,14 @@ function Folder({item, findCard, moveCard}:any) {
 
 
     const isActive = isOver && canDrop
-    let backgroundColor = '#fff'
+/*    let backgroundColor = '#fff'
     if (isActive) {
-        backgroundColor = 'darkgreen'
-    }
+        backgroundColor = '#EFF2FF'
+    }*/
 
 return (
     <div className={styled.folder}>
-        <div className={styled.folderWrapper}
-             style={{backgroundColor}}
+        <div className={`${styled.folderWrapper} ${isActive ? styled.isActive : ""}`}
              ref={(node) => {
                  drop(node);
                  drag(node);

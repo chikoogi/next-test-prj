@@ -36,6 +36,11 @@
   border: 1px solid #dadce0;
   border-radius: 8px;
   background-color: #fff;
+
+  &.isActive{
+    background-color: #eff2ff;
+    border: 1.5px solid rgba(92, 128, 255, 1)
+  }
 }
 
 .addFolderWrapper {
