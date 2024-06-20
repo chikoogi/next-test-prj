@@ -121,7 +121,8 @@ export default function FolderList() {
             const fromCard = findCard(fromId);
             const toCard = findCard(toId);
             const movingCard = cards.splice(fromCard.index, 1);
-            cards.splice(toCard.index, 0, movingCard[0]);
+            const newAfterIndex = toCard.index > fromCard.index ? 0 : 1;
+            cards.splice(toCard.index + newAfterIndex, 0, movingCard[0]);
             setCards([...cards]);
 
 
