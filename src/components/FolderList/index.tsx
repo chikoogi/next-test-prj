@@ -5,6 +5,7 @@ import {useDrag, useDrop} from "react-dnd";
 
 
 function Folder({item, findCard, moveCard}:any) {
+    const [selected, setSelected] = useState<boolean>(false);
     const [{ opacity, isDragging }, drag, preview] = useDrag(
         {
             type: "folder",
@@ -17,8 +18,6 @@ function Folder({item, findCard, moveCard}:any) {
         },
         [item.id, item.name]
     );
-
-
 
     const [{isOver, canDrop}, drop] = useDrop(() => ({
         accept: ["table"],
@@ -52,11 +51,13 @@ function Folder({item, findCard, moveCard}:any) {
 
 return (
     <div className={styled.folder}>
-        <div className={`${styled.folderWrapper} ${isActive ? styled.isActive : ""}`}
+        <div className={`${styled.folderWrapper} ${selected ? styled.selected : ""} ${isActive ? styled.isActive : ""}`}
              ref={(node) => {
                  drop(node);
                  drag(node);
-             }}>
+             }}
+            onClick={() => setSelected(!selected)}
+        >
             {item.name}
         </div>
 
@@ -74,19 +75,19 @@ return (
 export default function FolderList() {
     const [cards, setCards] = useState<any[]>([{
         id: 1,
-        name: "새폴더 1",
+        name: "폴더 1",
     },{
         id: 2,
-        name: "새폴더 2",
+        name: "폴더 2",
     },{
         id: 3,
-        name: "새폴더 3",
+        name: "폴더 3",
     },{
         id: 4,
-        name: "새폴더 4",
+        name: "폴더 4",
     },{
         id: 5,
-        name: "새폴더 5",
+        name: "폴더 5",
     }]);
 
     // const FOLDER_LIST = [...new Array(40)];
@@ -132,9 +133,9 @@ export default function FolderList() {
     return (
         <div className={styled.wrapper}>
             <div className={`${styled.leftBox} ${show ? styled.show : ""}`}>
-                <div className={styled.folderWrapper} onClick={addCard}>
+                <button className={styled.addFolderWrapper} onClick={addCard}>
                     새 폴더 추가
-                </div>
+                </button>
                 <div className={styled.sortableWrapper} >
                     <div className={styled.sortableLine}
                          style={{opacity: 0}}

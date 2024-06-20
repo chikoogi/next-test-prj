@@ -5,6 +5,7 @@ import {DragPreviewImage, useDrag} from "react-dnd";
 import folder from "./folder.png";
 import Image from "next/image";
 import Link from "next/link";
+import {useState} from "react";
 
 function TestImage() {
 
@@ -13,19 +14,20 @@ function TestImage() {
     )
 }
 
-function TableRow({id}) {
+function TableRow({item}) {
     const [{ isDragging }, drag, preview] = useDrag(
         () => ({
             type: "table",
-            item: {id},
+            item: item,
             collect: (monitor) => {
                 return {
                     isDragging: monitor.isDragging(),
                 };
             },
         }),
-        [id]
+        [item]
     );
+
     return (
         <>
             {/*<TestImage />*/}
@@ -37,10 +39,10 @@ function TableRow({id}) {
                 <td ref={(node) => {
                     // preview(node);
                     drag(node);
-                }}>{id}</td>
-                <td>Orange</td>
-                <td>Orange</td>
-                <td>Orange</td>
+                }}>{item.name}</td>
+                <td>{item.folder.join(", ")}</td>
+                <td>{item.creator}</td>
+                <td>{item.createdAt}</td>
             </tr>
         </>
 
@@ -50,6 +52,38 @@ function TableRow({id}) {
 
 
 export default function DataTable() {
+
+    const [table, setTable] = useState<any[]>([
+        {
+            name: "Fact Table Name",
+            folder: ["폴더 1"],
+            creator: "admin",
+            createdAt: "2024.06.01",
+        },
+        {
+            name: "Fact Table Name",
+            folder: ["폴더 2"],
+            creator: "admin",
+            createdAt: "2024.06.01",
+        },
+        {
+            name: "Fact Table Name",
+            folder: ["폴더 3"],
+            creator: "admin",
+            createdAt: "2024.06.01",
+        },{
+            name: "Fact Table Name",
+            folder: ["폴더 1"],
+            creator: "admin",
+            createdAt: "2024.06.01",
+        },{
+            name: "Fact Table Name",
+            folder: ["폴더 1","폴더 2"],
+            creator: "admin",
+            createdAt: "2024.06.01",
+        }
+
+    ])
 
     const LIST = [...new Array(30)];
 
@@ -63,10 +97,10 @@ export default function DataTable() {
                 <th>생성 일시</th>
             </tr>
             {
-                LIST.map((_,index)=>{
+                table.map((item,index)=>{
 
                     return (
-                        <TableRow id={index} key={index} />
+                        <TableRow item={item} key={index} />
                 )
                 })
             }

@@ -11,7 +11,7 @@ function DataPoolListLayout({children, card, table}
                                 : {children: ReactNode, card: ReactNode, table: ReactNode}) {
     const [type, setType] = useState<string>("table");
     const [preview, setPreview] = useState<boolean>(false);
-
+    const [selectedFolder, setSelectedFolder] = useState<string[]>([]);
 
     return (
         <>
@@ -24,7 +24,7 @@ function DataPoolListLayout({children, card, table}
                                 <button onClick={() => setType("table")}>table</button>
                                 <button onClick={() => setPreview(!preview)}>preview</button>
                             </div>
-                            <FolderList/>
+                            <FolderList />
                         </div>
                         <div className={styled.bottomWrapper}>
                             <div className={styled.leftContents}>Left</div>

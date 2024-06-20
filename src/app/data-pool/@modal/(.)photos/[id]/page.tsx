@@ -5,5 +5,5 @@ export default function PhotoModal({
                                    }: {
     params: { id: string };
 }) {
-    return <div>{params.id}</div>;
+    return <div>{params.id}asdfasdfasdf</div>;
 }
